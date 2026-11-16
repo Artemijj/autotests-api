@@ -1,0 +1,38 @@
+# Виртуальные окружение
+venv/
+.venv/
+env/
+ENV/
+
+# Настройки PyCharm и других IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Кэш и скомпилированные файлы Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Кэш и отчёты тестовых фреймворков (Pytest, Allure)
+.pytest_cache/
+.coverage
+htmlcov/
+allure-results/
+allure-report/
+reports/
+*.log
+
+# Секреты и переменные окружения (НИКОГДА не загружайте токены и пароли!)
+.env
+.env.*
+*.pem
+*.key
+secrets.json
+
+# Системные файлы ОС
+.DS_Store
+Thumbs.db
