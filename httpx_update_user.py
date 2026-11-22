@@ -23,20 +23,21 @@ login_response = httpx.post("http://localhost:8000/api/v1/authentication/login",
 login_response_data = login_response.json()
 print('Login data:', login_response_data)
 
-# Обновляем данные ранее созданного пользователя
-patch_user_headers = {
+# Обновление ранее созданного пользователя
+update_user_headers = {
     "Authorization": f"Bearer {login_response_data['token']['accessToken']}"
 }
-
-payload = {
-    "lastName": "Sidorov"
+update_user_payload = {
+    "email": get_random_email(),
+    "lastName": "string",
+    "firstName": "string",
+    "middleName": "string"
 }
-
-patch_user_response = httpx.patch(
-    f"http://localhost:8000/api/v1/users/{create_user_response_data['user']['id']}", json=payload,
-    headers=patch_user_headers
+update_user_response = httpx.patch(
+    f"http://localhost:8000/api/v1/users/{create_user_response_data['user']['id']}",
+    json=update_user_payload,
+    headers=update_user_headers
 )
-patch_user_response_data = patch_user_response.json()
-print('Delete user data:', patch_user_response_data)
-print("Status Code:", patch_user_response.status_code)
+update_user_response_data = update_user_response.json()
+print("Status Code:", update_user_response.status_code)
 
