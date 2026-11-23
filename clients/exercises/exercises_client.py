@@ -20,6 +20,13 @@ class Exercise(TypedDict):
     estimatedTime: str
 
 
+class GetExerciseResponseDict(TypedDict):
+    """
+    Описание структуры ответа на получение задания..
+    """
+    exercise: Exercise
+
+
 class GetExercisesQueryDict(TypedDict):
     """
     Описание структуры запроса на получение списка заданий для определенного курса.
@@ -51,7 +58,7 @@ class CreateExerciseResponseDict(TypedDict):
     """
     Описание структуры ответа создания задания.
     """
-    course: Exercise
+    exercise: Exercise
 
 
 class UpdateExerciseRequestDict(TypedDict):
@@ -64,6 +71,13 @@ class UpdateExerciseRequestDict(TypedDict):
     orderIndex: int | None
     description: str | None
     estimatedTime: str | None
+
+
+class UpdateExerciseResponseDict(TypedDict):
+    """
+    Описание структуры ответа обновления задания.
+    """
+    exercise: Exercise
 
 
 class ExercisesClient(APIClient):
@@ -105,7 +119,7 @@ class ExercisesClient(APIClient):
         :param request: Словарь с title, maxScore, minScore, orderIndex, description, estimatedTime.
         :return: Ответ от сервера в виде объекта httpx.Response
         """
-        return self.patch(f"/api/v1/exercises/{exercise_id}", json=request.dict())
+        return self.patch(f"/api/v1/exercises/{exercise_id}", json=request)
 
     def delete_exercise_api(self, exercise_id: str) -> Response:
         """
@@ -116,7 +130,7 @@ class ExercisesClient(APIClient):
         """
         return self.delete(f"/api/v1/exercises/{exercise_id}")
 
-    def get_exercise(self, exercise_id: str) -> Response:
+    def get_exercise(self, exercise_id: str) -> GetExerciseResponseDict:
         """
         Метод получения информации о задании по exercise_id.
 
@@ -136,7 +150,7 @@ class ExercisesClient(APIClient):
         response = self.get_exercises_api(query)
         return response.json()
 
-    def create_exercise(self, request: CreateExerciseRequestDict) -> Response:
+    def create_exercise(self, request: CreateExerciseRequestDict) -> CreateExerciseResponseDict:
         """
         Метод создания задания.
 
@@ -146,7 +160,7 @@ class ExercisesClient(APIClient):
         response = self.create_exercise_api(request)
         return response.json()
 
-    def update_exercise(self, exercise_id: str, request: UpdateExerciseRequestDict) -> Response:
+    def update_exercise(self, exercise_id: str, request: UpdateExerciseRequestDict) -> UpdateExerciseResponseDict:
         """
         Метод обновления задания.
 
